@@ -16,6 +16,7 @@ class Menu {
 public:
 	Menu();
 	void addMenuNode(MenuNode *node);
+
 	void reset();
 
 
