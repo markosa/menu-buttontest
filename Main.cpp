@@ -23,6 +23,15 @@ static Button BUTTON_RUN = Button(301, 400, "RUN");
 static Button BUTTON_ALARM = Button(401, 500, "ALARM");
 static Settings settings = Settings();
 
+static MenuNode PRGSET_DEV = MenuNode("PRGSET_DEV", &BUTTON_PRGSET);
+static MenuNode PRGSET_STOP = MenuNode("PRGSET_STOP", &BUTTON_PRGSET);
+static MenuNode PRGSET_FIX = MenuNode("PRGSET_FIX", &BUTTON_PRGSET);
+static MenuNode SET_SPEED = MenuNode("SET", &BUTTON_SET);
+static MenuNode SET_TRANSITION = MenuNode("SET", &BUTTON_SET);
+static MenuNode STA = MenuNode("STA", &BUTTON_STA);
+static MenuNode RUN = MenuNode("RUN", &BUTTON_RUN);
+static MenuNode ALARM = MenuNode("ALARM", &BUTTON_ALARM);
+
 void init() {
 	setupMenu();
 	settings.load();
@@ -31,19 +40,10 @@ void init() {
 void setupMenu() {
 
 	// PRGSET
-	MenuNode PRGSET_DEV = MenuNode("PRGSET_DEV", &BUTTON_PRGSET);
-	MenuNode PRGSET_STOP = MenuNode("PRGSET_STOP", &BUTTON_PRGSET);
-	MenuNode PRGSET_FIX = MenuNode("PRGSET_FIX", &BUTTON_PRGSET);
+
 	PRGSET_DEV.addRightNode(&PRGSET_STOP);
 	PRGSET_DEV.addRightNode(&PRGSET_FIX);
-
-	MenuNode SET_SPEED = MenuNode("SET", &BUTTON_SET);
-	MenuNode SET_TRANSITION = MenuNode("SET", &BUTTON_SET);
 	SET_SPEED.addRightNode(&SET_TRANSITION);
-
-	MenuNode STA = MenuNode("STA", &BUTTON_STA);
-	MenuNode RUN = MenuNode("RUN", &BUTTON_RUN);
-	MenuNode ALARM = MenuNode("ALARM", &BUTTON_ALARM);
 
 	menu.addMenuNode(&PRGSET_DEV);
 	menu.addMenuNode(&SET_SPEED);
