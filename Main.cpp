@@ -16,21 +16,21 @@ void setupMenu();
 void init();
 
 static Menu menu = Menu();
-static Button BUTTON_PRGSET = Button(0, 100, "PRGSET");
-static Button BUTTON_SET = Button(101, 200, "SET");
-static Button BUTTON_STA = Button(201, 300, "STA");
-static Button BUTTON_RUN = Button(301, 400, "RUN");
-static Button BUTTON_ALARM = Button(401, 500, "ALARM");
+static Button BUTTON_PRGSET(0, 100, "PRGSET");
+static Button BUTTON_SET(101, 200, "SET");
+static Button BUTTON_STA(201, 300, "STA");
+static Button BUTTON_RUN(301, 400, "RUN");
+static Button BUTTON_ALARM(401, 500, "ALARM");
 static Settings settings = Settings();
 
-static MenuNode PRGSET_DEV = MenuNode("PRGSET_DEV", &BUTTON_PRGSET);
-static MenuNode PRGSET_STOP = MenuNode("PRGSET_STOP", &BUTTON_PRGSET);
-static MenuNode PRGSET_FIX = MenuNode("PRGSET_FIX", &BUTTON_PRGSET);
-static MenuNode SET_SPEED = MenuNode("SET", &BUTTON_SET);
-static MenuNode SET_TRANSITION = MenuNode("SET", &BUTTON_SET);
-static MenuNode STA = MenuNode("STA", &BUTTON_STA);
-static MenuNode RUN = MenuNode("RUN", &BUTTON_RUN);
-static MenuNode ALARM = MenuNode("ALARM", &BUTTON_ALARM);
+static MenuNode PRGSET_DEV("PRGSET_DEV", &BUTTON_PRGSET);
+static MenuNode PRGSET_STOP("PRGSET_STOP", &BUTTON_PRGSET);
+static MenuNode PRGSET_FIX("PRGSET_FIX", &BUTTON_PRGSET);
+static MenuNode SET_SPEED("SET_SPEED", &BUTTON_SET);
+static MenuNode SET_TRANSITION("SET_TRANSITION", &BUTTON_SET);
+static MenuNode STA("STA", &BUTTON_STA);
+static MenuNode RUN("RUN", &BUTTON_RUN);
+static MenuNode ALARM("ALARM", &BUTTON_ALARM);
 
 void init() {
 	setupMenu();

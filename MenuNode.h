@@ -25,7 +25,7 @@ public:
 	char* getName();
 	MenuNode *getLeftNode();
 	MenuNode *getRightNode();
-
+	void (*callback) (const int &value);
 
 
 private:
