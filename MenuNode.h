@@ -22,6 +22,7 @@ public:
 	void setButton(Button *button);
 	void addRightNode(MenuNode *node);
 	void addLeftNode(MenuNode *node);
+	Button* getButton();
 	char* getName();
 	MenuNode *getLeftNode();
 	MenuNode *getRightNode();

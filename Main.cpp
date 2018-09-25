@@ -57,6 +57,54 @@ int main(void) {
 
 	init();
 
+	menu.printNodeInfo();
+
+	while (1) {
+		char c;
+		printf("\nq=PRGSET w=SET e=STA r=RUN t=ALARM\n");
+		printf("In main menu: %d\n",menu.isMainMenu());
+
+		c = getchar();getchar();
+		printf("Pressed: %c\n", c);
+		Button* buttonPressed = NULL;
+		switch (c) {
+		case 'q':
+			printf("\nPRGSET****\n");
+			buttonPressed = &BUTTON_PRGSET;
+			break;
+		case 'w':
+			printf("\SET****\n");
+			buttonPressed = &BUTTON_SET;
+
+			break;
+		case 'e':
+			printf("\STA****\n");
+			buttonPressed = &BUTTON_STA;
+
+			break;
+		case 'r':
+			printf("\RUN****\n");
+			buttonPressed = &BUTTON_RUN;
+
+			break;
+		case 't':
+			printf("\ALARM****\n");
+			buttonPressed = &BUTTON_ALARM;
+
+			break;
+
+		}
+		if (buttonPressed == NULL) {
+			printf("null\n");
+		}
+		printf("Got button: %s ", buttonPressed->getNamePtr());
+		printf("In main menu: %d",menu.isMainMenu());
+
+		menu.buttonPressed(buttonPressed->getNamePtr(), 200);
+		menu.printNodeInfo();
+
+	}
+
 	return 0;
 }
 

@@ -14,7 +14,7 @@ MenuNode::MenuNode(char* name) {
 	this->button = NULL;
 	this->right = NULL;
 	this->left = NULL;
-	this->callback=NULL;
+	this->callback = NULL;
 }
 
 MenuNode::MenuNode(char* name, Button *button) {
@@ -22,9 +22,8 @@ MenuNode::MenuNode(char* name, Button *button) {
 	this->button = button;
 	this->right = NULL;
 	this->left = NULL;
-	this->callback=NULL;
+	this->callback = NULL;
 }
-
 
 void MenuNode::setButton(Button *button) {
 	this->button = button;
@@ -47,23 +46,29 @@ MenuNode* MenuNode::getRightNode() {
 MenuNode* MenuNode::getLeftNode() {
 	return this->left;
 }
+Button* MenuNode::getButton() {
+	return this->button;
+}
 
 void MenuNode::addRightNode(MenuNode *node) {
 	MenuNode *last = getLastNode(this);
-	debug_print("addRightNode: Setting %s->right=%s \n",last->getName(),node->getName() );
+	debug_print("addRightNode: Setting %s->right=%s \n", last->getName(),
+			node->getName());
 	last->right = node;
-	node->left=last;
+	node->left = last;
 }
 void MenuNode::addLeftNode(MenuNode *node) {
 	MenuNode *first = getFirstNode(this);
-	debug_print("addLeftNode: Setting %s->left=%s \n",first->getName(),node->getName() );
+	debug_print("addLeftNode: Setting %s->left=%s \n", first->getName(),
+			node->getName());
 	first->left = node;
-	node->right=first;
+	node->right = first;
 }
 
 MenuNode* MenuNode::getFirstNode(MenuNode *node) {
 	if (node->left == NULL) {
-		debug_print("getFirstNode: node->left == NULL returning: %s \n", node->getName());
+		debug_print("getFirstNode: node->left == NULL returning: %s \n",
+				node->getName());
 		return node;
 	}
 	return getFirstNode(node->left);
@@ -71,7 +76,8 @@ MenuNode* MenuNode::getFirstNode(MenuNode *node) {
 
 MenuNode* MenuNode::getLastNode(MenuNode *node) {
 	if (node->right == NULL) {
-		debug_print("getLastNode: node->right == NULL returning: %s \n", node->getName());
+		debug_print("getLastNode: node->right == NULL returning: %s \n",
+				node->getName());
 
 		return node;
 	}

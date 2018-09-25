@@ -10,6 +10,7 @@
 
 #include "Configuration.h"
 #include "Menu.h"
+#include <strings.h>
 
 Menu::Menu() {
 	currentNode = NULL;
@@ -31,39 +32,84 @@ void Menu::addMenuNode(MenuNode *node) {
 
 }
 
-void Menu::buttonPressedInMainMenu(char *buttonName, int value) {
-	for (int i = 0; i < nodeCount; i++) {
-		MenuNode* node = nodes[i];
+NextNode Menu::findNextNode(char *buttonName) {
 
-		if (node->button != NULL && strcmp(node->button->namePtr, buttonName)) {
-			debug_print("buttonPressed: buttonName: %s value: %d",
-					node->button->namePtr, value);
+	NextNode nextNode = NextNode();
+	nextNode.buttonFound = false;
 
-			if (node->callback != NULL)
-				node->callback(value);
-			else
-				debug_print("Callback for node %s is NULL", node->namePtr);
-
-			return;
+	if (isMainMenu()) {
+		for (int i = 0; i < nodeCount; i++) {
+			MenuNode *node = nodes[i];
+			if (strcmp(node->getButton()->getNamePtr(), buttonName) == 0) {
+				debug_print(
+						"MAINMENU: Found main node matching pressed (node->getButton()->getNamePtr()) button %s\n",
+						buttonName);
+				nextNode.buttonFound = true;
+				nextNode.moveTo = node;
+			}
 		}
-	}
-
-	debug_print("No available button: %s in main menu", buttonName);
-}
-void Menu::buttonPressedInSubMenu(char *buttonName, int value) {
-	if (this->currentNode->right != NULL) {
-		if (this->currentNode->right->button != NULL) {
-			if (strcmp(this->currentNode->right->button->namePtr, buttonName)) {
-				this->currentNode->right->callback(value);
+	} else {
+		if ((currentNode->getRightNode() != NULL)
+				&& (currentNode->getRightNode()->getButton() != NULL)) {
+			if (strcmp(currentNode->getRightNode()->getButton()->getNamePtr(),
+					buttonName) == 0) {
+				debug_print(
+						"SUBMENU: Found sub node matching pressed (node->getButton()->getNamePtr()) button %s\n",
+						buttonName);
+				nextNode.buttonFound = true;
+				nextNode.moveTo = currentNode->getRightNode();
 			}
 		}
 	}
+
+	debug_print("No node available for button %s", buttonName);
+
+	return nextNode;
 }
 
 void Menu::buttonPressed(char *buttonName, int value) {
-	if (isMainMenu()) {
-		this->buttonPressedInMainMenu(buttonName, value);
-	} else {
-		this->buttonPressedInSubMenu(buttonName, value);
+	NextNode moveTo = findNextNode(buttonName);
+
+	if (moveTo)
+
+	/* if (moveTo == NULL) {
+	 // Return to main menu
+	 currentNode=NULL;
+	 return;
+	 } */
+
+	handleCallback(currentNode, value);
+
+	// Move to node
+	// currentNode=moveTo;
+
+}
+
+void Menu::handleCallback(MenuNode *node, int value) {
+	if (node != NULL && node->callback != NULL) {
+		node->callback(value);
 	}
+}
+
+void Menu::printNodeInfo() {
+	if (isMainMenu()) {
+		printf("*********\n");
+		printf("IN MAIN MENU - nodes available: \n");
+		for (int i = 0; i < nodeCount; i++) {
+			MenuNode* node = nodes[i];
+			Button* button = node->getButton();
+			printf("%d ** %s # %s \n", i, node->getName(),
+					button->getNamePtr());
+		}
+		printf("*********\n");
+	} else {
+		printf("*********\n");
+		printf("IN SUB MENU - node available: \n");
+		Button* button = this->currentNode->getButton();
+		printf("%s # %s \n", currentNode->getName(),
+				currentNode->getButton()->getNamePtr());
+		printf("*********\n");
+
+	}
+
 }

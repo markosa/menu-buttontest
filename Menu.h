@@ -11,6 +11,12 @@
 #include "Configuration.h"
 #include "MenuNode.h"
 #include "Button.h"
+
+struct NextNode {
+	bool buttonFound = false;
+	MenuNode* moveTo = NULL;
+};
+
 class Menu {
 
 public:
@@ -19,16 +25,14 @@ public:
 	bool isMainMenu();
 	void buttonPressed(char *buttonName, int value);
 	void reset();
-
+	void printNodeInfo();
 
 private:
 	MenuNode* nodes[MENU_MAX_NODES];
 	int nodeCount;
 	MenuNode* currentNode;
-	void Menu::buttonPressedInMainMenu(char *buttonName, int value);
-	void Menu::buttonPressedInSubMenu(char *buttonName, int value);
-
-
+	void handleCallback(MenuNode *node, int value);
+	NextNode findNextNode(char *buttonName);
 };
 
 
