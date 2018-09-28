@@ -1,86 +1,46 @@
 /*
  * MenuNode.cpp
  *
- *  Created on: Sep 22, 2018
+ *  Created on: Sep 25, 2018
  *      Author: markos
  */
 
+
+
 #include "MenuNode.h"
-#include "Button.h"
 #include "Configuration.h"
+#include "Settings.h"
+#include <stdio.h>
 
-MenuNode::MenuNode(char* name) {
-	this->namePtr = name;
-	this->button = NULL;
-	this->right = NULL;
-	this->left = NULL;
-	this->callback = NULL;
-}
+MenuNode::MenuNode(char *name, Button* next, void(*saveCallback)(const int)) {
+	this->name=name;
+	this->nextButton=next;
+	this->prevButton=NULL;
+	this->saveCallback=saveCallback;
 
-MenuNode::MenuNode(char* name, Button *button) {
-	this->namePtr = name;
-	this->button = button;
-	this->right = NULL;
-	this->left = NULL;
-	this->callback = NULL;
 }
 
-void MenuNode::setButton(Button *button) {
-	this->button = button;
-}
-void MenuNode::setLeftNode(MenuNode *node) {
-	this->left = node;
-}
-void MenuNode::setRightNode(MenuNode *node) {
-	this->right = node;
+
+MenuNode::MenuNode(char *name, Button* prev, Button* next, void(*saveCallback)(const int)) {
+	this->name=name;
+	this->nextButton=next;
+	this->prevButton=prev;
+	this->saveCallback=saveCallback;
 }
 
 char* MenuNode::getName() {
-	return this->namePtr;
+	return this->name;
 }
 
-MenuNode* MenuNode::getRightNode() {
-	return this->right;
+Button* MenuNode::getNextButton() {
+	if (nextButton == NULL)
+		debug_print("nextButton is null", NULL);
+	return nextButton;
 }
 
-MenuNode* MenuNode::getLeftNode() {
-	return this->left;
-}
-Button* MenuNode::getButton() {
-	return this->button;
+Button* MenuNode::getPrevButton() {
+	return this->prevButton;
 }
 
-void MenuNode::addRightNode(MenuNode *node) {
-	MenuNode *last = getLastNode(this);
-	debug_print("addRightNode: Setting %s->right=%s \n", last->getName(),
-			node->getName());
-	last->right = node;
-	node->left = last;
-}
-void MenuNode::addLeftNode(MenuNode *node) {
-	MenuNode *first = getFirstNode(this);
-	debug_print("addLeftNode: Setting %s->left=%s \n", first->getName(),
-			node->getName());
-	first->left = node;
-	node->right = first;
-}
 
-MenuNode* MenuNode::getFirstNode(MenuNode *node) {
-	if (node->left == NULL) {
-		debug_print("getFirstNode: node->left == NULL returning: %s \n",
-				node->getName());
-		return node;
-	}
-	return getFirstNode(node->left);
-}
 
-MenuNode* MenuNode::getLastNode(MenuNode *node) {
-	if (node->right == NULL) {
-		debug_print("getLastNode: node->right == NULL returning: %s \n",
-				node->getName());
-
-		return node;
-	}
-
-	return getLastNode(node->right);
-}

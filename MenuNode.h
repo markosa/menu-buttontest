@@ -1,7 +1,7 @@
 /*
  * MenuNode.h
  *
- *  Created on: Sep 20, 2018
+ *  Created on: Sep 25, 2018
  *      Author: markos
  */
 
@@ -9,34 +9,22 @@
 #define MENUNODE_H_
 
 #include "Button.h"
-#include <stdio.h>
-
 class MenuNode {
-
 public:
-	MenuNode(char *name);
-	MenuNode(char *name, Button *button);
 
-	void setLeftNode(MenuNode *node);
-	void setRightNode(MenuNode *node);
-	void setButton(Button *button);
-	void addRightNode(MenuNode *node);
-	void addLeftNode(MenuNode *node);
-	Button* getButton();
+	MenuNode(char *name, Button *nextButton, void (*saveCallback)(const int));
+	MenuNode(char *name, Button *prevButton, Button *nextButton, void(*saveCallback)(const int));
+	Button* getNextButton();
+	Button* getPrevButton();
+	void (*saveCallback)(const int);
 	char* getName();
-	MenuNode *getLeftNode();
-	MenuNode *getRightNode();
-	void (*callback) (const int &value);
-
-
 private:
-	MenuNode* getFirstNode(MenuNode *node);
-	MenuNode* getLastNode(MenuNode *node);
+	char *name;
+	Button* prevButton;
+	Button* nextButton;
 
-	char *namePtr;
-	MenuNode *left;
-	MenuNode *right;
-	Button *button;
 };
+
+
 
 #endif /* MENUNODE_H_ */

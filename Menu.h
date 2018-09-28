@@ -1,40 +1,42 @@
 /*
  * Menu.h
  *
- *  Created on: Sep 22, 2018
+ *  Created on: Sep 25, 2018
  *      Author: markos
  */
 
 #ifndef MENU_H_
 #define MENU_H_
 
-#include "Configuration.h"
 #include "MenuNode.h"
-#include "Button.h"
-
-struct NextNode {
-	bool buttonFound = false;
-	MenuNode* moveTo = NULL;
-};
+#include "Configuration.h"
 
 class Menu {
 
 public:
+	struct Position {
+		int mainIndex;
+		int subIndex;
+	};
+
 	Menu();
-	void addMenuNode(MenuNode *node);
-	bool isMainMenu();
-	void buttonPressed(char *buttonName, int value);
-	void reset();
-	void printNodeInfo();
+	void add(MenuNode* mainNode, MenuNode* subMenuNodes[], int length);
+	MenuNode* getCurrentNode();
+	void move(Button *button, int buttonValue);
+
+	Position position;
+	bool isMainMenuActive();
 
 private:
-	MenuNode* nodes[MENU_MAX_NODES];
-	int nodeCount;
+	int mainMenuCount;
+
+	MenuNode* nodes[MENU_MAX_MAIN_NODES][MENU_MAX_SUB_NODES];
 	MenuNode* currentNode;
-	void handleCallback(MenuNode *node, int value);
-	NextNode findNextNode(char *buttonName);
+	void handleForwardMove(Button* button);
+	void handleBackwardMove(Button* button);
+	void moveToMainMenu();
+	void handleCallback(MenuNode *node, int buttonValue);
+
 };
-
-
 
 #endif /* MENU_H_ */

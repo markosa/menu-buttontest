@@ -13,7 +13,8 @@
             do { if (DEBUG) fprintf(stderr, fmt, __VA_ARGS__); } while (0)
 
 
-#define MENU_MAX_NODES 10
+#define MENU_MAX_MAIN_NODES 5
+#define MENU_MAX_SUB_NODES 5
 
 
 
